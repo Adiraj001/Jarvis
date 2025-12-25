@@ -1,5 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
+import random
+import webbrowser
 
 engine = pyttsx3.init()
 
@@ -20,12 +22,41 @@ def command():
         try:
             query = r.recognize_google(audio, language='en-in')
             print(f"User said: {query}\n")
-        except Exception as e:
+        except Exception:
             print("Say that again please...")
         return query
+    
+def play_music():
+    speak("Playing your favorite music.")
+    
+    song = random.randint(1,10)
+    if song == 1:
+        webbrowser.open("youtube.com/watch?v=KQtMPONdxGs&list=RDKQtMPONdxGs&start_radio=1&pp=ygUFbXVzaWOgBwE%3D")
+    elif song == 2:
+        webbrowser.open("https://www.youtube.com/watch?v=GX9x62kFsVU&list=RDGX9x62kFsVU&start_radio=1")
+    elif song == 3:
+        webbrowser.open("https://www.youtube.com/watch?v=cmMiyZaSELo&list=RDGX9x62kFsVU&index=15") 
+    elif song == 4:
+        webbrowser.open("https://www.youtube.com/watch?v=3EVCqRLf2Vo&list=RDGX9x62kFsVU&index=17")
+    elif song == 5:
+        webbrowser.open("https://www.youtube.com/watch?v=r_3K9vZ4oZE&list=RDGX9x62kFsVU&index=23")
+    elif song == 6:
+        webbrowser.open("https://www.youtube.com/watch?v=ru_5PA8cwkE&list=RDGX9x62kFsVU&index=27")
+    elif song == 7:
+        webbrowser.open("https://www.youtube.com/watch?v=Qo4IOTAbGAM&list=RDQo4IOTAbGAM&start_radio=1")
+    elif song == 8:
+        webbrowser.open("https://www.youtube.com/watch?v=DY1DdeW3VyI&list=RDDY1DdeW3VyI&start_radio=1")
+    elif song == 9:
+        webbrowser.open("https://www.youtube.com/watch?v=Qhwafoo7Pnc&list=RDQhwafoo7Pnc&start_radio=1")
+    else:
+        webbrowser.open("https://www.youtube.com/watch?v=xP7wxilM_4U&list=RDxP7wxilM_4U&start_radio=1")
 
 def main():
     request = command().lower()
+
     if 'hello' in request:
         speak("Hello, how can I help you today?")
+    elif 'play music' in request:
+        play_music()
 
+main()

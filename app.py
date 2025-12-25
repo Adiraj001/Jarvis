@@ -51,6 +51,7 @@ def play_music():
     else:
         webbrowser.open("https://www.youtube.com/watch?v=xP7wxilM_4U&list=RDxP7wxilM_4U&start_radio=1")
 
+
 def main():
     request = command().lower()
 

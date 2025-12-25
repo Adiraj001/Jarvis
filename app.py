@@ -21,7 +21,6 @@ def command():
             audio = r.listen(source)
         try:
             query = r.recognize_google(audio, language='en-in')
-            print(f"User said: {query}\n")
         except Exception:
             print("Say that again please...")
         return query

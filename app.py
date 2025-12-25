@@ -1,6 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
 import random
+import datetime
 import webbrowser
 
 engine = pyttsx3.init()
@@ -14,7 +15,7 @@ def speak(audio):
 def command():
     query = ""
     while query == "":
-        
+
         r = sr.Recognizer()
         with sr.Microphone() as source:
             print("Listening...")
@@ -52,6 +53,15 @@ def play_music():
     else:
         webbrowser.open("https://www.youtube.com/watch?v=xP7wxilM_4U&list=RDxP7wxilM_4U&start_radio=1")
 
+def timeanddate(request):
+    if "say time" in request:
+        now = datetime.datetime.now()
+        current_time = now.strftime("%H:%M")
+        speak(f"The current time is " + str(current_time))
+    elif "say date" in request:
+        now = datetime.datetime.now()
+        current_date = now.strftime("%d:%m:%Y")
+        speak(f"Today's date is " + str(current_date))
 
 def main():
     request = command().lower()
@@ -60,5 +70,11 @@ def main():
         speak("Hello, how can I help you today?")
     elif 'play music' in request:
         play_music()
+    elif 'say time' in request:
+        timeanddate(request)
+    elif 'say date' in request:
+        timeanddate(request)
+        
+    
 
 main()

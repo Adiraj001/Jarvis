@@ -1,1 +1,4 @@
  create a room
+ go to gym
+ fix my watch
+clean my room

@@ -63,6 +63,13 @@ def timeanddate(request):
         current_date = now.strftime("%d:%m:%Y")
         speak(f"Today's date is " + str(current_date))
 
+def TaskCreation(request):
+    task = request.replace("new task", "")
+    if task != "":
+        speak(f"Task created: {task}")
+        with open("data/tasks.txt", "a") as f:
+            f.write(task + "\n")
+
 def main():
     request = command().lower()
 
@@ -74,6 +81,8 @@ def main():
         timeanddate(request)
     elif 'say date' in request:
         timeanddate(request)
+    elif 'new task' in request:
+        TaskCreation(request)
         
     
 

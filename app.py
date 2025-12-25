@@ -14,6 +14,7 @@ def speak(audio):
 def command():
     query = ""
     while query == "":
+        
         r = sr.Recognizer()
         with sr.Microphone() as source:
             print("Listening...")
@@ -21,6 +22,7 @@ def command():
             audio = r.listen(source)
         try:
             query = r.recognize_google(audio, language='en-in')
+            print(f"You said: {query}\n") 
         except Exception:
             print("Say that again please...")
         return query

@@ -13,7 +13,7 @@ engine = pyttsx3.init()
 engine.setProperty('rate', 200)
 
 def speak(audio):
-    print(f"Assistant: {audio}")
+    print(f"Jarvis: {audio}")
     engine.say(audio)
     engine.runAndWait()
 
@@ -99,6 +99,23 @@ def show_notification(request):
         timeout=10
     )
 
+def wikipedia_search(request):
+    query = request.replace("jarvis ", "").strip()
+    query = request.replace("search wikipedia ", "").strip()
+    result = wikipedia.summary(request, sentences=2)
+    speak("According to Wikipedia")
+    speak(result)
+
+def google_search(request):
+    query = request.replace("jarvis ", "").strip()
+    query = request.replace("search ", "").strip()
+    webbrowser.open(f"https://www.google.com/search?q={query}")
+
+def youtube_search(request):
+    query = request.replace("jarvis ", "").strip()
+    query = request.replace("search youtube ", "").strip()
+    webbrowser.open(f"https://www.youtube.com/results?search_query={query}")
+
 def main():
     request = command()
 
@@ -126,12 +143,18 @@ def main():
         
     elif "open" in request:
         open_application(request)
-        
+
+    elif "wikipedia" in request:
+        wikipedia_search(request)
+
+    elif "search youtube" in request:
+        youtube_search(request)
+
+    elif "search" in request:
+        google_search(request)
+
     
-        
-
-
-
+    
 if __name__ == "__main__":
     speak("Jarvis is now online.")
     while True:

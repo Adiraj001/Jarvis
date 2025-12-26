@@ -7,6 +7,7 @@ import sys
 import os
 from plyer import notification
 import pyautogui
+import wikipedia
 
 engine = pyttsx3.init()
 engine.setProperty('rate', 200)
@@ -82,6 +83,22 @@ def TaskCreation(request):
         except FileNotFoundError:
             speak("You have no tasks saved yet.")
 
+def open_application(request):
+    query = request.replace("open", "").strip()
+    pyautogui.press("super")
+    pyautogui.typewrite(query)
+    pyautogui.sleep(2)
+    pyautogui.press("enter")
+
+def show_notification(request):
+    with open("data/tasks.txt", "r") as f:
+            task = f.read()
+    notification.notify(
+        title="Notification",
+        message=task,
+        timeout=10
+    )
+
 def main():
     request = command()
 
@@ -103,23 +120,16 @@ def main():
     elif 'exit' in request or 'quit' in request or 'bye' in request:
         speak("Goodbye!")
         sys.exit()
+
     elif 'show work' in request or 'so work' in request:
-        with open("data/tasks.txt", "r") as f:
-            task = f.read()
+        show_notification(request)
         
-        notification.notify(
-            title="Your Tasks",
-            message=task,
-            timeout=10
-        )
     elif "open" in request:
-        query = request.replace("open", "").strip()
-        pyautogui.press("super")
-        pyautogui.typewrite(query)
-        pyautogui.sleep(2)
-        pyautogui.press("enter")
+        open_application(request)
         
+    
         
+
 
 
 if __name__ == "__main__":

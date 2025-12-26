@@ -5,6 +5,8 @@ import datetime
 import webbrowser
 import sys
 import os
+from plyer import notification
+import pyautogui
 
 engine = pyttsx3.init()
 engine.setProperty('rate', 200)
@@ -101,6 +103,24 @@ def main():
     elif 'exit' in request or 'quit' in request or 'bye' in request:
         speak("Goodbye!")
         sys.exit()
+    elif 'show work' in request or 'so work' in request:
+        with open("data/tasks.txt", "r") as f:
+            task = f.read()
+        
+        notification.notify(
+            title="Your Tasks",
+            message=task,
+            timeout=10
+        )
+    elif "open" in request:
+        query = request.replace("open", "").strip()
+        pyautogui.press("super")
+        pyautogui.typewrite(query)
+        pyautogui.sleep(2)
+        pyautogui.press("enter")
+        
+        
+
 
 if __name__ == "__main__":
     speak("Jarvis is now online.")

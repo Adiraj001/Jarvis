@@ -94,7 +94,6 @@ def TaskCreation(request):
 def clear_tasks():
     file_path = "data/tasks.txt"
     if os.path.exists(file_path):
-        # Using "w" mode opens the file for writing and truncates (clears) it
         with open(file_path, "w") as f:
             f.write("") 
         speak("I have cleared all your tasks.")
@@ -104,21 +103,17 @@ def clear_tasks():
 def system_control(request):
     if "lock" in request:
         speak("Locking your computer.")
-        # Calls the Windows API to lock the workstation immediately
         ctypes.windll.user32.LockWorkStation()
 
     elif "shutdown" in request:
         speak("Shutting down the computer in 10 seconds. Make sure to save your work.")
-        # /s = shutdown, /t 10 = 10 second timer
         os.system("shutdown /s /t 10")
 
     elif "restart" in request:
         speak("Restarting the computer.")
-        # /r = restart, /t 10 = 10 second timer
         os.system("shutdown /r /t 10")
         
     elif "cancel" in request or "abort" in request:
-        # Emergency stop for shutdown/restart
         os.system("shutdown /a")
         speak("The shutdown sequence has been cancelled.")
 

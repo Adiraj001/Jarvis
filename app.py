@@ -8,8 +8,6 @@ import os
 from plyer import notification
 import pyautogui
 import wikipedia
-import subprocess
-import platform
 import ctypes
 
 def speak(audio):
@@ -22,20 +20,32 @@ def speak(audio):
 
 def command():
     r = sr.Recognizer()
+    
+    r.dynamic_energy_threshold = True
+    r.pause_threshold = 1.0
+    
     with sr.Microphone() as source:
-        print("Listening...")
-        r.pause_threshold = 0.8
-        r.adjust_for_ambient_noise(source, duration=0.5)
+        print("\n[Listening...]")
+        r.adjust_for_ambient_noise(source, duration=1) 
+        
         try:
-            audio = r.listen(source, timeout=5, phrase_time_limit=5)
+            audio = r.listen(source, timeout=10) 
+        except sr.WaitTimeoutError:
+            return ""
         except Exception:
+            print(f"Mic Error")
             return ""
 
     try:
-        print("Recognizing...")
+        print("[Recognizing...]")
         query = r.recognize_google(audio, language='en-in')
-        print(f"You said: {query}\n") 
+        print(f"User: {query}") 
         return query.lower()
+    except sr.UnknownValueError:
+        return ""
+    except sr.RequestError:
+        speak("I'm having trouble connecting to the internet.")
+        return ""
     except Exception:
         return ""
     
@@ -142,7 +152,7 @@ def wikipedia_search(request):
     try:
         page = wikipedia.page(query)
         speak(f"According to Wikipedia, {page.summary[:200]}")
-    except wikipedia.exceptions.DisambiguationError as e:
+    except wikipedia.exceptions.DisambiguationError:
         speak(f"There are multiple results for {query}. Please be more specific.")
     except Exception:
         speak("I couldn't find any information on that topic.")

@@ -138,12 +138,12 @@ def show_notification():
         speak("No tasks to show.")
 
 def wikipedia_search(request):
-    speak("Searching Wikipedia...")
-    query = request.replace("wikipedia", "").replace("search", "").replace("jarvis", "").strip()
+    query = request.replace("wikipedia", "").replace("search", "").strip()
     try:
-        result = wikipedia.summary(query, sentences=2)
-        speak("According to Wikipedia")
-        speak(result)
+        page = wikipedia.page(query)
+        speak(f"According to Wikipedia, {page.summary[:200]}")
+    except wikipedia.exceptions.DisambiguationError as e:
+        speak(f"There are multiple results for {query}. Please be more specific.")
     except Exception:
         speak("I couldn't find any information on that topic.")
 

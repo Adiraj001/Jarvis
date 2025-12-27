@@ -48,15 +48,15 @@ Jarvis is a Python-based voice assistant designed to perform daily tasks using v
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/jarvis-voice-assistant.git
-cd jarvis-voice-assistant
+git clone https://github.com/Adiraj001/Jarvis.git
+cd Jarvis
 ```
 
 ### 2️⃣ Create a Virtual Environment (Recommended)
 
 ```bash
-python -m venv venv
-venv\Scripts\activate   # Windows
+python -m venv Jarvis
+conda activate Jarvis
 ```
 
 ### 3️⃣ Install Dependencies

@@ -8,6 +8,9 @@ import os
 from plyer import notification
 import pyautogui
 import wikipedia
+import subprocess
+import platform
+import ctypes
 
 def speak(audio):
     print(f"Jarvis: {audio}")
@@ -88,6 +91,37 @@ def TaskCreation(request):
         except Exception:
             speak("I had trouble reading your tasks.")
 
+def clear_tasks():
+    file_path = "data/tasks.txt"
+    if os.path.exists(file_path):
+        # Using "w" mode opens the file for writing and truncates (clears) it
+        with open(file_path, "w") as f:
+            f.write("") 
+        speak("I have cleared all your tasks.")
+    else:
+        speak("You don't have a task list to clear.")
+
+def system_control(request):
+    if "lock" in request:
+        speak("Locking your computer.")
+        # Calls the Windows API to lock the workstation immediately
+        ctypes.windll.user32.LockWorkStation()
+
+    elif "shutdown" in request:
+        speak("Shutting down the computer in 10 seconds. Make sure to save your work.")
+        # /s = shutdown, /t 10 = 10 second timer
+        os.system("shutdown /s /t 10")
+
+    elif "restart" in request:
+        speak("Restarting the computer.")
+        # /r = restart, /t 10 = 10 second timer
+        os.system("shutdown /r /t 10")
+        
+    elif "cancel" in request or "abort" in request:
+        # Emergency stop for shutdown/restart
+        os.system("shutdown /a")
+        speak("The shutdown sequence has been cancelled.")
+
 def open_application(request):
     query = request.replace("open", "").strip()
     speak(f"Opening {query}")
@@ -164,6 +198,12 @@ def main():
 
     elif "search" in request:
         google_search(request)
+    
+    elif 'clear task' in request or 'delete tasks' in request:
+        clear_tasks()
+
+    elif 'lock' in request or 'shutdown' in request or 'restart' in request:
+        system_control(request)
 
 if __name__ == "__main__":
     speak("Jarvis is now online.")

@@ -72,23 +72,20 @@ def timeanddate(request):
         speak(f"Today's date is {current_date}")
 
 def TaskCreation(request):
-    if not os.path.exists("data"):
-        os.makedirs("data")
-
     if "new task" in request or "add task" in request:
         task = request.replace("new task", "").replace("add task", "").strip()
         if not task:
             speak("What is the task you'd like to add?")
             task = command()
         if task:
-            with open("data/tasks.txt", "a") as f:
+            with open("tasks.txt", "a") as f:
                 f.write(task + "\n")
             speak(f"Added to your list: {task}")
             
     elif "speak task" in request:
         try:
-            if os.path.exists("data/tasks.txt"):
-                with open("data/tasks.txt", "r") as f:
+            if os.path.exists("tasks.txt"):
+                with open("tasks.txt", "r") as f:
                     tasks = f.readlines()
                     if tasks:
                         speak("Here are your tasks:")
@@ -102,7 +99,7 @@ def TaskCreation(request):
             speak("I had trouble reading your tasks.")
 
 def clear_tasks():
-    file_path = "data/tasks.txt"
+    file_path = "tasks.txt"
     if os.path.exists(file_path):
         with open(file_path, "w") as f:
             f.write("") 
@@ -136,8 +133,8 @@ def open_application(request):
     pyautogui.press("enter")
 
 def show_notification():
-    if os.path.exists("data/tasks.txt"):
-        with open("data/tasks.txt", "r") as f:
+    if os.path.exists("tasks.txt"):
+        with open("tasks.txt", "r") as f:
             task = f.read()
         notification.notify(
             title="Your Tasks",

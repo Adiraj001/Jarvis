@@ -2,6 +2,8 @@
 
 Jarvis is a Python-based voice assistant designed to perform daily tasks using voice commands. It listens through your microphone, processes speech, and responds with natural voice output while automating common system and web-based actions.
 
+> 🚧 **This project is actively maintained, and new features will be added frequently.**
+
 ---
 
 ## 🚀 Features
@@ -139,3 +141,4 @@ You will hear:
 ## 👨‍💻 Author
 
 **Aditya Raj Pandey**
+Python Developer
